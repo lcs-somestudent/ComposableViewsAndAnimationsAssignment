@@ -47,13 +47,13 @@ struct CustomComposableView: View {
             // Iterate over the 12 values in the array above
             ForEach(initialAngles, id: \.self) { angle in
                 
-                // Create a rectangle (this happens 12 times)
+                // Create a square (this happens 12 times)
                 Rectangle()
                     .frame(width: 100, height: 100)
                     // Set the hue based on the angle
                     .foregroundColor(Color(hue: angle/360.0, saturation: 0.8, brightness: 0.9))
                     // Initially each square is rotated according to the list of angles in the array (angle)
-                    // Once the animation becomes acctive, all views are rotated to 225.0 degrees
+                    // Once the animation becomes active, all views are rotated to 225.0 degrees
                     .rotationEffect(.degrees(animationActive ? 225 : angle), anchor: .topLeading)
                     // Make the animation of the state change (how much square is rotated by) take 2 seconds
                     // Make the animation repeat forever, and automatically reverse itself
