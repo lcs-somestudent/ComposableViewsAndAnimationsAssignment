@@ -12,7 +12,7 @@ struct CustomComposableView: View {
     // Initial angles of rotation for the squares
     let initialAngles: [Double] = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
     
-    // Is the animation active?
+    // Is the "squares" animation active?
     @State private var animationActive = false
     
     // List of phrases for encouragement
