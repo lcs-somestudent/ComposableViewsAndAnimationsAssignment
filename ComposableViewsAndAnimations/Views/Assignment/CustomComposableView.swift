@@ -15,9 +15,34 @@ struct CustomComposableView: View {
     // Is the animation active?
     @State private var animationActive = false
     
+    // List of phrases for encouragement
+    let encouragement = ["You rock!", "Way to go!", "Keep it up!"]
+    
+    // Initialize a timer that will fire in four seconds
+    // This ensures that the phrase changes when the text is covered up
+    let timer = Timer.publish(every: 4, on: .main, in: .common).autoconnect()
+    
+    // What is the current position in the encouragement array?
+    @State private var index = 0
+    
     var body: some View {
         
         ZStack {
+            
+            // Text appears underneath the rectangles
+            Text(encouragement[index])
+                .font(.title)
+                .offset(y: 25)
+                .onReceive(timer) { input in
+                    
+                    // Change what phrase is showing
+                    if index < 2 {
+                        index += 1
+                    } else {
+                        index = 0
+                    }
+                                        
+                }
 
             // Iterate over the 12 values in the array above
             ForEach(initialAngles, id: \.self) { angle in
@@ -32,15 +57,15 @@ struct CustomComposableView: View {
                     .rotationEffect(.degrees(animationActive ? 225 : angle), anchor: .topLeading)
                     // Make the animation of the state change (how much square is rotated by) take 2 seconds
                     // Make the animation repeat forever, and automatically reverse itself
-                    .animation(Animation.easeInOut(duration: 2.0).delay(1.0).repeatForever(autoreverses: true))
+                    .animation(Animation.easeInOut(duration: 2.0).repeatForever(autoreverses: true))
                     .offset(x: 50, y: 50)
+                    .onAppear() {
+                        
+                        // Make the animation start
+                        animationActive = true
+                        
+                    }
 
-            }
-            .onAppear() {
-                
-                // Make the animation start
-                animationActive = true
-                
             }
             
         }
